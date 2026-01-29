@@ -1,379 +1,281 @@
-/**
- * ═══════════════════════════════════════════════════════════════════
- * animations.css - الأنيميشن والحركات
- * ═══════════════════════════════════════════════════════════════════
- */
-
-/* Thinking Indicator */
-.thinking-indicator {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 30px;
-  animation: fadeIn 0.3s ease-in;
-}
-
-.thinking-dots {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 15px;
-}
-
-.thinking-dots span {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--primary-color);
-  animation: pulse 1.4s infinite ease-in-out;
-}
-
-.thinking-dots span:nth-child(1) {
-  animation-delay: -0.32s;
-}
-
-.thinking-dots span:nth-child(2) {
-  animation-delay: -0.16s;
-}
-
-.thinking-indicator p {
-  color: var(--text-secondary);
-  font-size: 14px;
-}
-
-/* Pulse Animation */
-@keyframes pulse {
-  0%, 80%, 100% {
-    transform: scale(0.6);
-    opacity: 0.4;
-  }
-  40% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-/* Fade In */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-/* Fade In Up */
+/* css/animations.css - الأنيميشن والتأثيرات */
+/* تأثيرات التحميل */
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-/* Fade In Down */
-@keyframes fadeInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.fade-in-up {
+    animation: fadeInUp 0.5s ease forwards;
 }
 
-/* Slide In Right */
-@keyframes slideInRight {
-  from {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
+/* تأثير النبض */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
-/* Slide In Left */
-@keyframes slideInLeft {
-  from {
-    transform: translateX(-100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
+.pulse {
+    animation: pulse 2s infinite;
 }
 
-/* Scale In */
-@keyframes scaleIn {
-  from {
-    transform: scale(0.8);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-/* Shake */
+/* تأثير الاهتزاز */
 @keyframes shake {
-  0%, 100% {
-    transform: translateX(0);
-  }
-  10%, 30%, 50%, 70%, 90% {
-    transform: translateX(-5px);
-  }
-  20%, 40%, 60%, 80% {
-    transform: translateX(5px);
-  }
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
 }
 
-/* Rotate */
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.shake {
+    animation: shake 0.5s ease-in-out;
 }
 
-/* Glow */
-@keyframes glow {
-  0%, 100% {
-    box-shadow: 0 0 5px rgba(33, 150, 243, 0.5);
-  }
-  50% {
-    box-shadow: 0 0 20px rgba(33, 150, 243, 0.8);
-  }
+/* تأثير الدوران */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
-/* Bounce */
+.spin {
+    animation: spin 1s linear infinite;
+}
+
+/* تأثير التمايل */
 @keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {
-    transform: translateY(0);
-  }
-  40% {
-    transform: translateY(-20px);
-  }
-  60% {
-    transform: translateY(-10px);
-  }
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    60% { transform: translateY(-5px); }
 }
 
-/* Wiggle */
-@keyframes wiggle {
-  0%, 100% {
-    transform: rotate(0deg);
-  }
-  25% {
-    transform: rotate(-5deg);
-  }
-  75% {
-    transform: rotate(5deg);
-  }
+.bounce {
+    animation: bounce 2s infinite;
 }
 
-/* Heartbeat */
-@keyframes heartbeat {
-  0%, 100% {
-    transform: scale(1);
-  }
-  10%, 30% {
-    transform: scale(0.9);
-  }
-  20%, 40% {
-    transform: scale(1.1);
-  }
+/* تأثير الظهور التدريجي */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
-/* Progress Bar */
-.progress-bar {
-  width: 100%;
-  height: 4px;
-  background: var(--border-color);
-  border-radius: 2px;
-  overflow: hidden;
-  margin-top: 10px;
+.fade-in {
+    animation: fadeIn 0.3s ease forwards;
 }
 
-.progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-  border-radius: 2px;
-  transition: width 0.3s ease;
-  animation: shimmer 2s infinite;
+/* تأثير الاختفاء التدريجي */
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
 }
 
-@keyframes shimmer {
-  0% {
-    background-position: -200px 0;
-  }
-  100% {
-    background-position: calc(200px + 100%) 0;
-  }
+.fade-out {
+    animation: fadeOut 0.3s ease forwards;
 }
 
-/* Ripple Effect */
+/* تأثير الانزلاق من اليمين */
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.slide-in-right {
+    animation: slideInRight 0.3s ease forwards;
+}
+
+/* تأثير الانزلاق من اليسار */
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.slide-in-left {
+    animation: slideInLeft 0.3s ease forwards;
+}
+
+/* تأثير التموج */
 .ripple {
-  position: relative;
-  overflow: hidden;
+    position: relative;
+    overflow: hidden;
 }
 
-.ripple::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.5);
-  transform: translate(-50%, -50%);
-  transition: width 0.6s, height 0.6s;
+.ripple:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%);
+    transform-origin: 50% 50%;
 }
 
-.ripple:active::after {
-  width: 300px;
-  height: 300px;
+.ripple:focus:not(:active)::after {
+    animation: ripple 1s ease-out;
 }
 
-/* Skeleton Loading */
-.skeleton {
-  background: linear-gradient(90deg, 
-    #f0f0f0 25%, 
-    #e0e0e0 50%, 
-    #f0f0f0 75%
-  );
-  background-size: 200% 100%;
-  animation: skeleton-loading 1.5s infinite;
-  border-radius: 4px;
+@keyframes ripple {
+    0% {
+        transform: scale(0, 0);
+        opacity: 0.5;
+    }
+    20% {
+        transform: scale(25, 25);
+        opacity: 0.3;
+    }
+    100% {
+        opacity: 0;
+        transform: scale(40, 40);
+    }
 }
 
-@keyframes skeleton-loading {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
+/* تأثير الكتابة */
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
 }
 
-/* Utility Classes */
-.animate-fade-in {
-  animation: fadeIn 0.5s ease-in;
+.typing-effect {
+    overflow: hidden;
+    white-space: nowrap;
+    animation: typing 3s steps(40, end);
 }
 
-.animate-fade-in-up {
-  animation: fadeInUp 0.5s ease-out;
+/* تأثير الموجة */
+.wave {
+    display: inline-block;
+    animation: wave-animation 2.5s infinite;
+    transform-origin: 70% 70%;
 }
 
-.animate-slide-in-right {
-  animation: slideInRight 0.5s ease-out;
+@keyframes wave-animation {
+    0% { transform: rotate(0deg); }
+    10% { transform: rotate(14deg); }
+    20% { transform: rotate(-8deg); }
+    30% { transform: rotate(14deg); }
+    40% { transform: rotate(-4deg); }
+    50% { transform: rotate(10deg); }
+    60% { transform: rotate(0deg); }
+    100% { transform: rotate(0deg); }
 }
 
-.animate-scale-in {
-  animation: scaleIn 0.3s ease-out;
+/* تأثير التوهج */
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0 0 5px var(--secondary-color),
+                    0 0 10px var(--secondary-color),
+                    0 0 15px var(--secondary-color);
+    }
+    50% {
+        box-shadow: 0 0 10px var(--secondary-color),
+                    0 0 20px var(--secondary-color),
+                    0 0 30px var(--secondary-color);
+    }
 }
 
-.animate-shake {
-  animation: shake 0.5s ease;
+.glow {
+    animation: glow 2s infinite;
 }
 
-.animate-bounce {
-  animation: bounce 1s ease;
+/* تأثير الطفو */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
 }
 
-.animate-glow {
-  animation: glow 2s infinite;
+.float {
+    animation: float 3s ease-in-out infinite;
 }
 
-/* Hover Effects */
-.hover-lift {
-  transition: transform 0.3s ease;
+/* تأثير تحميل الشريط */
+@keyframes loading-bar {
+    0% {
+        width: 0%;
+    }
+    50% {
+        width: 50%;
+    }
+    100% {
+        width: 100%;
+    }
 }
 
-.hover-lift:hover {
-  transform: translateY(-5px);
+.loading-bar {
+    height: 4px;
+    background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+    animation: loading-bar 2s ease-in-out infinite;
+    border-radius: 2px;
 }
 
-.hover-scale {
-  transition: transform 0.3s ease;
+/* تأثير الظهور المتتالي */
+.stagger-item {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.5s ease forwards;
 }
 
-.hover-scale:hover {
-  transform: scale(1.05);
+.stagger-item:nth-child(1) { animation-delay: 0.1s; }
+.stagger-item:nth-child(2) { animation-delay: 0.2s; }
+.stagger-item:nth-child(3) { animation-delay: 0.3s; }
+.stagger-item:nth-child(4) { animation-delay: 0.4s; }
+.stagger-item:nth-child(5) { animation-delay: 0.5s; }
+
+/* تأثير القلب */
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    25% { transform: scale(1.1); }
+    50% { transform: scale(1); }
+    75% { transform: scale(1.1); }
+    100% { transform: scale(1); }
 }
 
-.hover-brighten {
-  transition: filter 0.3s ease;
+.heartbeat {
+    animation: heartbeat 1s infinite;
 }
 
-.hover-brighten:hover {
-  filter: brightness(1.1);
+/* تأثير التأرجح */
+@keyframes swing {
+    20% { transform: rotate(15deg); }
+    40% { transform: rotate(-10deg); }
+    60% { transform: rotate(5deg); }
+    80% { transform: rotate(-5deg); }
+    100% { transform: rotate(0deg); }
 }
 
-/* Loading Spinner */
-.spinner {
-  width: 40px;
-  height: 40px;
-  border: 4px solid rgba(0,0,0,0.1);
-  border-top-color: var(--primary-color);
-  border-radius: 50%;
-  animation: rotate 1s linear infinite;
-}
-
-.spinner-sm {
-  width: 20px;
-  height: 20px;
-  border-width: 3px;
-}
-
-.spinner-lg {
-  width: 60px;
-  height: 60px;
-  border-width: 6px;
-}
-
-/* Dots Loading */
-.dots-loading {
-  display: inline-flex;
-  gap: 6px;
-}
-
-.dots-loading span {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--primary-color);
-  animation: pulse 1.4s infinite ease-in-out;
-}
-
-.dots-loading span:nth-child(1) {
-  animation-delay: -0.32s;
-}
-
-.dots-loading span:nth-child(2) {
-  animation-delay: -0.16s;
-}
-
-/* Transitions */
-.transition-all {
-  transition: all 0.3s ease;
-}
-
-.transition-fast {
-  transition: all 0.15s ease;
-}
-
-.transition-slow {
-  transition: all 0.5s ease;
+.swing {
+    transform-origin: top center;
+    animation: swing 1s ease-in-out;
 }
