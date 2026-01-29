@@ -1,27 +1,41 @@
 {
-  "name": "المساعد الذكي للجان الفنية",
-  "short_name": "مساعد اللجان",
-  "description": "مساعد ذكي متخصص لفرق عمل اللجان الفنية",
-  "start_url": "/",
-  "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#2196F3",
-  "orientation": "portrait-primary",
-  "icons": [
-    {
-      "src": "assets/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "assets/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
-  ],
-  "categories": ["productivity", "business", "utilities"],
-  "lang": "ar",
-  "dir": "rtl"
+    "name": "مساعد اللجان الذكي",
+    "short_name": "اللجان الذكي",
+    "description": "نظام ذكاء اصطناعي للمساعدة في تراخيص الأنشطة والمناطق الصناعية",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#2c3e50",
+    "theme_color": "#2c3e50",
+    "orientation": "portrait-primary",
+    "lang": "ar",
+    "dir": "rtl",
+    
+    "icons": [
+        {
+            "src": "icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    
+    "categories": ["business", "productivity", "education"],
+    "shortcuts": [
+        {
+            "name": "بدء محادثة جديدة",
+            "short_name": "محادثة",
+            "description": "ابدأ محادثة مع المساعد الذكي",
+            "url": "/?mode=chat"
+        },
+        {
+            "name": "قاعدة المعرفة",
+            "short_name": "معرفة",
+            "description": "تصفح قاعدة المعرفة المتكاملة",
+            "url": "/?mode=knowledge"
+        }
+    ]
 }
