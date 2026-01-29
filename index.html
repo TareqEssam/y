@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="مساعد ذكي للجان الاستثمار - نظام ذكاء اصطناعي للمساعدة في تراخيص الأنشطة والمناطق الصناعية">
+    
+    <!-- PWA Configuration -->
+    <meta name="theme-color" content="#2c3e50">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/chat.css">
+    <link rel="stylesheet" href="css/animations.css">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <title>مساعد اللجان الذكي - نظام الذكاء الاصطناعي للتراخيص الاستثمارية</title>
+    
+    <!-- Global Configuration -->
+    <script type="application/json" id="app-config">
+        {
+            "version": "1.0.0",
+            "environment": "production",
+            "databases": {
+                "activities": "data/vectors/activity_vectors.js",
+                "industrial": "data/vectors/industrial_vectors.js",
+                "decision104": "data/vectors/decision104_vectors.js"
+            },
+            "cacheSize": 1000,
+            "enableVoice": true,
+            "enableLearning": true,
+            "researcherId": "auto-generate"
+        }
+    </script>
+</head>
+<body>
+    <!-- Main App Container -->
+    <div class="app-container">
+        
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="logo-icon">🤖</div>
+                    <h1 class="app-title">مساعد اللجان الذكي</h1>
+                    <span class="app-subtitle">نظام الذكاء الاصطناعي للتراخيص الاستثمارية</span>
+                </div>
+                
+                <div class="header-controls">
+                    <!-- Researcher Info -->
+                    <div class="researcher-info">
+                        <div class="researcher-avatar">
+                            <span>👨‍💼</span>
+                        </div>
+                        <div class="researcher-details">
+                            <span class="researcher-name" id="researcher-name">باحث جديد</span>
+                            <span class="researcher-id" id="researcher-id">ID: توليد تلقائي...</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Settings Button -->
+                    <button class="settings-btn" id="settings-btn" aria-label="الإعدادات">
+                        ⚙️
+                    </button>
+                    
+                    <!-- Performance Indicator -->
+                    <div class="performance-indicator" id="performance-indicator">
+                        <span class="status-dot"></span>
+                        <span class="status-text">جاهز</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Navigation Tabs -->
+            <nav class="main-nav">
+                <div class="nav-tabs">
+                    <button class="nav-tab active" data-tab="chat">
+                        <span class="tab-icon">💬</span>
+                        <span class="tab-text">محادثة ذكية</span>
+                    </button>
+                    <button class="nav-tab" data-tab="knowledge">
+                        <span class="tab-icon">📚</span>
+                        <span class="tab-text">قاعدة المعرفة</span>
+                    </button>
+                    <button class="nav-tab" data-tab="map">
+                        <span class="tab-icon">🗺️</span>
+                        <span class="tab-text">الخريطة التفاعلية</span>
+                    </button>
+                    <button class="nav-tab" data-tab="reports">
+                        <span class="tab-icon">📊</span>
+                        <span class="tab-text">التقارير والإحصائيات</span>
+                    </button>
+                    <button class="nav-tab" data-tab="analysis">
+                        <span class="tab-icon">🔍</span>
+                        <span class="tab-text">تحليل متقدم</span>
+                    </button>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            
+            <!-- Chat Tab (Active by Default) -->
+            <div class="tab-content active" id="chat-tab">
+                <div class="chat-container">
+                    <!-- Chat Header -->
+                    <div class="chat-header">
+                        <h2>💬 المحادثة الذكية</h2>
+                        <div class="chat-controls">
+                            <button class="voice-btn" id="voice-toggle">
+                                <span class="voice-icon">🎤</span>
+                                <span class="voice-text">التحدث</span>
+                            </button>
+                            <button class="clear-btn" id="clear-chat">
+                                <span class="clear-icon">🗑️</span>
+                                <span class="clear-text">مسح المحادثة</span>
+                            </button>
+                            <button class="export-btn" id="export-chat">
+                                <span class="export-icon">💾</span>
+                                <span class="export-text">حفظ المحادثة</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Chat Messages Area -->
+                    <div class="chat-messages" id="chat-messages">
+                        <!-- Welcome Message -->
+                        <div class="message assistant">
+                            <div class="message-avatar">🤖</div>
+                            <div class="message-content">
+                                <div class="message-text">
+                                    <strong>مرحباً! أنا مساعد اللجان الذكي 🤖</strong><br><br>
+                                    أنا نظام ذكاء اصطناعي متخصص في مساعدتك في:<br>
+                                    ✅ تراخيص الأنشطة الصناعية والتجارية<br>
+                                    ✅ المناطق الصناعية والمؤهلات<br>
+                                    ✅ قرارات واستفسارات القرار 104<br>
+                                    ✅ الربط بين الأنشطة والمناطق المناسبة<br>
+                                    ✅ الإجابة على الاستفسارات الفنية المعقدة<br><br>
+                                    <em>يمكنك التحدث معي باللغة العربية الفصحى أو العامية المصرية 💬</em>
+                                </div>
+                                <div class="message-time">الآن</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Thinking Indicator (Hidden by Default) -->
+                    <div class="thinking-indicator" id="thinking-indicator">
+                        <div class="thinking-dots">
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                        </div>
+                        <div class="thinking-text">أفكر في إجابتك...</div>
+                        <div class="thinking-process" id="thinking-process">
+                            <div class="process-step">🔍 تحليل السؤال...</div>
+                            <div class="process-step">📚 البحث في القواعد...</div>
+                            <div class="process-step">🔄 الربط بين المعلومات...</div>
+                            <div class="process-step">📝 توليد الإجابة...</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Chat Input Area -->
+                    <div class="chat-input-area">
+                        <div class="input-container">
+                            <textarea 
+                                class="chat-input" 
+                                id="chat-input" 
+                                placeholder="اكتب سؤالك هنا... أو انقر على زر الميكروفون للتحدث بالصوت 🎤 (يمكنك استخدام العربية العامية)"
+                                rows="3"
+                            ></textarea>
+                            <div class="input-controls">
+                                <button class="send-btn" id="send-btn">
+                                    <span class="send-icon">↗️</span>
+                                    <span class="send-text">إرسال</span>
+                                </button>
+                                <button class="voice-input-btn" id="voice-input-btn">
+                                    <span class="mic-icon">🎤</span>
+                                </button>
+                                <button class="attach-btn" id="attach-btn">
+                                    <span class="attach-icon">📎</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="input-hints">
+                            <span class="hint">💡 جرب أن تسأل: "ما هي متطلبات ترخيص مصنع أدوية في القاهرة؟"</span>
+                            <span class="hint">💡 أو: "أين يمكنني إنشاء مشروع إلكترونيات في الإسكندرية؟"</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Knowledge Base Tab -->
+            <div class="tab-content" id="knowledge-tab">
+                <div class="knowledge-container">
+                    <h2>📚 قاعدة المعرفة المتكاملة</h2>
+                    <div class="knowledge-grid">
+                        <div class="knowledge-card">
+                            <div class="card-icon">🏭</div>
+                            <h3>قاعدة بيانات الأنشطة</h3>
+                            <p>تصنيفات الأنشطة الصناعية والتجارية ومتطلبات ترخيصها</p>
+                            <div class="card-stats">
+                                <span>📊 150+ نشاط</span>
+                                <span>🔄 محدث تلقائياً</span>
+                            </div>
+                            <button class="card-btn" data-source="activities">تصفح الأنشطة</button>
+                        </div>
+                        
+                        <div class="knowledge-card">
+                            <div class="card-icon">🗺️</div>
+                            <h3>المناطق الصناعية</h3>
+                            <p>خرائط تفاعلية وتفاصيل المناطق الصناعية في جميع المحافظات</p>
+                            <div class="card-stats">
+                                <span>📍 27 محافظة</span>
+                                <span>🏢 500+ منطقة</span>
+                            </div>
+                            <button class="card-btn" data-source="industrial">استكشاف المناطق</button>
+                        </div>
+                        
+                        <div class="knowledge-card">
+                            <div class="card-icon">📜</div>
+                            <h3>قرار رقم 104</h3>
+                            <p>النصوص الكاملة والتفسيرات والمراجعات للقرارات التنظيمية</p>
+                            <div class="card-stats">
+                                <span>⚖️ 50+ مادة</span>
+                                <span>🔗 مراجع متشابكة</span>
+                            </div>
+                            <button class="card-btn" data-source="decision104">استعراض القرار</button>
+                        </div>
+                        
+                        <div class="knowledge-card">
+                            <div class="card-icon">🤝</div>
+                            <h3>الجهات الحكومية</h3>
+                            <p>دليل شامل للجهات المعنية بالتراخيص وإجراءاتها</p>
+                            <div class="card-stats">
+                                <span>🏛️ 20+ جهة</span>
+                                <span>⏱️ أوقات استجابة</span>
+                            </div>
+                            <button class="card-btn" data-source="government">عرض الجهات</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Search -->
+                    <div class="knowledge-search">
+                        <input type="text" class="search-input" placeholder="🔍 ابحث في قاعدة المعرفة...">
+                        <button class="search-btn">بحث</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Map Tab -->
+            <div class="tab-content" id="map-tab">
+                <div class="map-container">
+                    <h2>🗺️ الخريطة التفاعلية للمناطق الصناعية</h2>
+                    <div class="map-wrapper">
+                        <div class="map-placeholder" id="map-placeholder">
+                            <div class="placeholder-content">
+                                <div class="placeholder-icon">🗺️</div>
+                                <h3>الخريطة التفاعلية</h3>
+                                <p>سيتم تحميل الخريطة التفاعلية للمناطق الصناعية هنا</p>
+                                <p><small>يمكنك تصفية المناطق حسب النشاط، المساحة، والمحافظة</small></p>
+                                <div class="map-filters">
+                                    <select class="filter-select" id="governorate-filter">
+                                        <option value="">اختر المحافظة</option>
+                                        <option value="cairo">القاهرة</option>
+                                        <option value="alexandria">الإسكندرية</option>
+                                        <option value="giza">الجيزة</option>
+                                    </select>
+                                    <select class="filter-select" id="activity-filter">
+                                        <option value="">اختر النشاط</option>
+                                        <option value="pharmaceutical">صناعات دوائية</option>
+                                        <option value="electronics">إلكترونيات</option>
+                                        <option value="textile">منسوجات</option>
+                                    </select>
+                                    <button class="filter-btn">تطبيق الفلاتر</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Reports Tab -->
+            <div class="tab-content" id="reports-tab">
+                <div class="reports-container">
+                    <h2>📊 التقارير والإحصائيات</h2>
+                    <div class="reports-grid">
+                        <div class="report-card">
+                            <h3>📈 إحصائيات الاستخدام</h3>
+                            <div class="report-content">
+                                <div class="stat-item">
+                                    <span class="stat-label">إجمالي الاستفسارات:</span>
+                                    <span class="stat-value" id="total-queries">0</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">متوسط وقت الإجابة:</span>
+                                    <span class="stat-value" id="avg-response-time">0 ثانية</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">معدل الدقة:</span>
+                                    <span class="stat-value" id="accuracy-rate">0%</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="report-card">
+                            <h3>📋 تقرير الجلسة</h3>
+                            <div class="report-content">
+                                <p>يمكنك إنشاء تقرير مفصل عن جلسة العمل الحالية</p>
+                                <button class="generate-report-btn" id="generate-session-report">توليد تقرير الجلسة</button>
+                                <button class="export-report-btn" id="export-session-report">تصدير كـ PDF</button>
+                            </div>
+                        </div>
+                        
+                        <div class="report-card">
+                            <h3>🧠 التعلم الآلي</h3>
+                            <div class="report-content">
+                                <div class="stat-item">
+                                    <span class="stat-label">الأنماط المتعلمة:</span>
+                                    <span class="stat-value" id="learned-patterns">0</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">تحسين الأداء:</span>
+                                    <span class="stat-value" id="performance-improvement">+0%</span>
+                                </div>
+                                <button class="view-patterns-btn" id="view-patterns-btn">عرض الأنماط</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Analysis Tab -->
+            <div class="tab-content" id="analysis-tab">
+                <div class="analysis-container">
+                    <h2>🔍 التحليل المتقدم</h2>
+                    <div class="analysis-tools">
+                        <div class="analysis-tool">
+                            <h3>🧩 تحليل الأسئلة المركبة</h3>
+                            <textarea class="analysis-input" id="complex-analysis-input" placeholder="أدخل سؤالاً مركباً للتحليل..."></textarea>
+                            <button class="analyze-btn" id="analyze-complex-btn">تحليل السؤال</button>
+                            <div class="analysis-result" id="complex-analysis-result"></div>
+                        </div>
+                        
+                        <div class="analysis-tool">
+                            <h3>🔄 محرك المراجعة المتبادلة</h3>
+                            <p>تحقق من تناسق المعلومات بين القواعد المختلفة</p>
+                            <button class="analyze-btn" id="cross-reference-btn">تشغيل المراجعة</button>
+                            <div class="analysis-result" id="cross-reference-result"></div>
+                        </div>
+                        
+                        <div class="analysis-tool">
+                            <h3>🎯 مستشار التفاصيل الفنية</h3>
+                            <input type="text" class="analysis-input" id="technical-query-input" placeholder="أدخل استفساراً فنياً دقيقاً...">
+                            <button class="analyze-btn" id="technical-query-btn">استشارة فنية</button>
+                            <div class="analysis-result" id="technical-query-result"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Settings Panel (Hidden by Default) -->
+        <div class="settings-panel" id="settings-panel">
+            <div class="settings-header">
+                <h3>⚙️ إعدادات النظام</h3>
+                <button class="close-settings" id="close-settings">✕</button>
+            </div>
+            
+            <div class="settings-content">
+                <div class="settings-section">
+                    <h4>🎤 إعدادات الصوت</h4>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="enable-voice" checked>
+                            تفعيل التعرف الصوتي
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="enable-tts" checked>
+                            تفعيل الصوت للإجابات
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>سرعة الصوت:
+                            <input type="range" id="tts-speed" min="0.5" max="2" step="0.1" value="1">
+                            <span id="speed-value">1.0x</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="settings-section">
+                    <h4>🧠 إعدادات الذكاء الاصطناعي</h4>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="enable-learning" checked>
+                            تفعيل التعلم الآلي
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="enable-memory" checked>
+                            حفظ ذاكرة الباحث
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>مستوى التفصيل:
+                            <select id="detail-level">
+                                <option value="basic">أساسي</option>
+                                <option value="standard" selected>قياسي</option>
+                                <option value="detailed">مفصل</option>
+                                <option value="expert">خبير</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="settings-section">
+                    <h4>💾 إعدادات البيانات</h4>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="enable-cache" checked>
+                            تفعيل ذاكرة التخزين المؤقت
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="auto-save" checked>
+                            الحفظ التلقائي
+                        </label>
+                    </div>
+                    <button class="settings-btn" id="clear-cache-btn">مسح الذاكرة المؤقتة</button>
+                    <button class="settings-btn" id="export-data-btn">تصدير جميع البيانات</button>
+                </div>
+                
+                <div class="settings-section">
+                    <h4>👤 بيانات الباحث</h4>
+                    <div class="setting-item">
+                        <label>اسم الباحث:
+                            <input type="text" id="researcher-name-input" placeholder="أدخل اسمك">
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>مستوى الخبرة:
+                            <select id="expertise-level">
+                                <option value="beginner">مبتدئ</option>
+                                <option value="intermediate" selected>متوسط</option>
+                                <option value="advanced">متقدم</option>
+                                <option value="expert">خبير</option>
+                            </select>
+                        </label>
+                    </div>
+                    <button class="settings-btn" id="save-profile-btn">حفظ الملف الشخصي</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <span>مساعد اللجان الذكي v1.0.0</span>
+                    <span class="separator">•</span>
+                    <span id="database-status">🟢 جميع القواعد نشطة</span>
+                    <span class="separator">•</span>
+                    <span id="memory-usage">ذاكرة: 0/1000</span>
+                </div>
+                <div class="footer-links">
+                    <button class="footer-link" id="help-btn">مساعدة</button>
+                    <button class="footer-link" id="about-btn">حول المشروع</button>
+                    <button class="footer-link" id="debug-btn">وضع التصحيح</button>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Voice Activity Indicator -->
+        <div class="voice-activity-indicator" id="voice-activity">
+            <div class="voice-animation">
+                <div class="voice-bar"></div>
+                <div class="voice-bar"></div>
+                <div class="voice-bar"></div>
+                <div class="voice-bar"></div>
+                <div class="voice-bar"></div>
+            </div>
+            <div class="voice-text">🎤 أستمع إليك...</div>
+        </div>
+
+        <!-- Audio Player for TTS -->
+        <audio id="tts-player" hidden></audio>
+    </div>
+
+    <!-- JavaScript Files -->
+    <!-- Core Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hnswlib-js/0.2.1/hnswlib.js"></script>
+    
+    <!-- App Core -->
+    <script src="js/app.js" type="module"></script>
+    
+    <!-- Core Modules -->
+    <script src="js/core/DatabaseManager.js" type="module"></script>
+    <script src="js/core/VectorEngine.js" type="module"></script>
+    <script src="js/core/TextSearchEngine.js" type="module"></script>
+    <script src="js/core/HybridSearchEngine.js" type="module"></script>
+    <script src="js/core/CacheManager.js" type="module"></script>
+    
+    <!-- NLP Modules -->
+    <script src="js/nlp/ArabicNormalizer.js" type="module"></script>
+    <script src="js/nlp/IntentClassifier.js" type="module"></script>
+    <script src="js/nlp/EntityExtractor.js" type="module"></script>
+    <script src="js/nlp/ContextManager.js" type="module"></script>
+    <script src="js/nlp/QuestionAnalyzer.js" type="module"></script>
+    <script src="js/nlp/DialectHandler.js" type="module"></script>
+    
+    <!-- Intelligence Modules -->
+    <script src="js/intelligence/ReasoningEngine.js" type="module"></script>
+    <script src="js/intelligence/LearningEngine.js" type="module"></script>
+    <script src="js/intelligence/ThresholdOptimizer.js" type="module"></script>
+    <script src="js/intelligence/AnswerGenerator.js" type="module"></script>
+    <script src="js/intelligence/ConfidenceScorer.js" type="module"></script>
+    
+    <!-- UI Modules -->
+    <script src="js/ui/ChatInterface.js" type="module"></script>
+    <script src="js/ui/ThinkingIndicator.js" type="module"></script>
+    <script src="js/ui/ResultsRenderer.js" type="module"></script>
+    <script src="js/ui/StatisticsView.js" type="module"></script>
+    <script src="js/ui/SettingsPanel.js" type="module"></script>
+    
+    <!-- Voice Modules -->
+    <script src="js/voice/SpeechRecognizer.js" type="module"></script>
+    <script src="js/voice/SpeechSynthesizer.js" type="module"></script>
+    <script src="js/voice/VADDetector.js" type="module"></script>
+    <script src="js/voice/AudioController.js" type="module"></script>
+    
+    <!-- Data Modules -->
+    <script src="js/data/DataLoader.js" type="module"></script>
+    <script src="js/data/IndexBuilder.js" type="module"></script>
+    <script src="js/data/VectorIndexer.js" type="module"></script>
+    <script src="js/data/DataValidator.js" type="module"></script>
+    
+    <!-- Utils -->
+    <script src="js/utils/MathUtils.js" type="module"></script>
+    <script src="js/utils/StringUtils.js" type="module"></script>
+    <script src="js/utils/DateUtils.js" type="module"></script>
+    <script src="js/utils/Logger.js" type="module"></script>
+    <script src="js/utils/PerformanceMonitor.js" type="module"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('service-worker.js')
+                    .then(registration => {
+                        console.log('Service Worker registered:', registration);
+                    })
+                    .catch(error => {
+                        console.log('Service Worker registration failed:', error);
+                    });
+            });
+        }
+        
+        // PWA Install Prompt
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            // Show install button or banner
+            setTimeout(() => {
+                if (deferredPrompt) {
+                    const installBtn = document.createElement('button');
+                    installBtn.className = 'install-btn';
+                    installBtn.innerHTML = '📱 تثبيت التطبيق';
+                    installBtn.onclick = () => {
+                        deferredPrompt.prompt();
+                        deferredPrompt.userChoice.then((choiceResult) => {
+                            if (choiceResult.outcome === 'accepted') {
+                                console.log('User accepted install');
+                            }
+                            deferredPrompt = null;
+                        });
+                    };
+                    document.querySelector('.footer-links').prepend(installBtn);
+                }
+            }, 5000);
+        });
+    </script>
+</body>
+</html>

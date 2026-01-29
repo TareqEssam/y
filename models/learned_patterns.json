@@ -1,0 +1,15 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2026-01-29",
+  "patterns": {
+    "successful_queries": [],
+    "failed_queries": [],
+    "user_preferences": {},
+    "optimization_history": []
+  },
+  "statistics": {
+    "total_queries": 0,
+    "avg_confidence": 0,
+    "avg_response_time": 0
+  }
+}
