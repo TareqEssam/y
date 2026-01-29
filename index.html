@@ -38,6 +38,58 @@
             "researcherId": "auto-generate"
         }
     </script>
+    <!-- أيقونات SVG مضمنة -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="icon-192" viewBox="0 0 192 192">
+    <rect width="192" height="192" fill="#2c3e50" rx="24"/>
+    <text x="96" y="120" font-family="Arial" font-size="100" 
+          fill="white" text-anchor="middle" dominant-baseline="middle">🤖</text>
+  </symbol>
+  <symbol id="icon-512" viewBox="0 0 512 512">
+    <rect width="512" height="512" fill="#2c3e50" rx="64"/>
+    <text x="256" y="320" font-family="Arial" font-size="250" 
+          fill="white" text-anchor="middle" dominant-baseline="middle">🤖</text>
+  </symbol>
+</svg>
+
+<!-- تحويل SVG إلى PNG باستخدام JavaScript -->
+<script>
+// إنشاء أيقونات PNG من SVG
+function createFavicon() {
+    const sizes = [192, 512];
+    
+    sizes.forEach(size => {
+        const canvas = document.createElement('canvas');
+        canvas.width = size;
+        canvas.height = size;
+        const ctx = canvas.getContext('2d');
+        
+        // خلفية
+        ctx.fillStyle = '#2c3e50';
+        ctx.fillRect(0, 0, size, size);
+        
+        // رسم روبوت إيموجي
+        ctx.fillStyle = 'white';
+        ctx.font = `${size * 0.5}px Arial`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('🤖', size/2, size/2);
+        
+        // تحويل إلى رابط بيانات
+        const dataUrl = canvas.toDataURL('image/png');
+        
+        // إنشاء رابط للأيقونة
+        const link = document.createElement('link');
+        link.rel = 'icon';
+        link.sizes = `${size}x${size}`;
+        link.href = dataUrl;
+        document.head.appendChild(link);
+    });
+}
+
+// تشغيل عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', createFavicon);
+</script>
 </head>
 <body>
     <!-- Main App Container -->
@@ -592,4 +644,5 @@
         });
     </script>
 </body>
+
 </html>
