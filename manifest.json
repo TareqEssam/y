@@ -23,19 +23,5 @@
         }
     ],
     
-    "categories": ["business", "productivity", "education"],
-    "shortcuts": [
-        {
-            "name": "بدء محادثة جديدة",
-            "short_name": "محادثة",
-            "description": "ابدأ محادثة مع المساعد الذكي",
-            "url": "/?mode=chat"
-        },
-        {
-            "name": "قاعدة المعرفة",
-            "short_name": "معرفة",
-            "description": "تصفح قاعدة المعرفة المتكاملة",
-            "url": "/?mode=knowledge"
-        }
-    ]
+    "categories": ["business", "productivity", "education"]
 }
